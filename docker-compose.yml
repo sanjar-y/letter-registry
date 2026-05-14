@@ -9,9 +9,11 @@ services:
     volumes:
       - backend_data:/app/prisma
       - backend_uploads:/app/uploads
+    env_file:
+      - ./server/.env
     environment:
       - DATABASE_URL=file:./prisma/dev.db
-      - PORT=3000
+      - PORT=5000
       - NODE_ENV=production
     labels:
       - "com.agrobank.project=Elektron Jurnal — Markaziy Agrobank"
