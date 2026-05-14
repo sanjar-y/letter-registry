@@ -2,9 +2,9 @@
     "name": "elektron-jurnal-backend",
     "version": "1.0.0",
     "description": "Backend server for Elektron Jurnal — Markaziy Agrobank outgoing letters registration system",
-    "main": "dist/server.js",
+    "main": "dist/src/server.js",
     "scripts": {
-        "start": "node dist/server.js",
+        "start": "node dist/src/server.js",
         "dev": "nodemon src/server.ts",
         "build": "tsc",
         "seed": "ts-node prisma/seed.ts"

@@ -13,11 +13,6 @@ services:
       - DATABASE_URL=file:./prisma/dev.db
       - PORT=3000
       - NODE_ENV=production
-      - ADMIN_USERNAME=agrobank.sec.admin
-      - ADMIN_PASSWORD=AgR0B@nk#Sec!Adm1n_26X
-      - USER_USERNAME=user
-      - USER_PASSWORD=user123
-      - SEED_ALLOW_ADMIN_RESET=false
     labels:
       - "com.agrobank.project=Elektron Jurnal — Markaziy Agrobank"
       - "com.agrobank.service=backend"
@@ -29,7 +24,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8082:80"
     depends_on:
       - backend
     labels:

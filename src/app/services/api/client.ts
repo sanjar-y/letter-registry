@@ -1,8 +1,7 @@
 import axios, { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { AuthResponse, PaginatedList, LetterDTO, FileMeta, UserDTO } from '../../types/portal';
 
-// 1) Base URL setup
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api';
+const API_BASE_URL = '/api';
 
 const axiosInstance = axios.create({
     baseURL: API_BASE_URL
