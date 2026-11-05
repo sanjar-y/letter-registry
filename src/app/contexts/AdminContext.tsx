@@ -81,8 +81,8 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       setIndices(i);
       setDepartments(d);
 
-      // Letters - fetch all if API supports it
-      const l = await api.letters.list({ limit: 100 });
+      // Letters - fetch all (no practical limit)
+      const l = await api.letters.list({ limit: 1000000 });
       const mappedLetters = l.items.map((letter: any) => ({
         id: letter.id,
         letterNumber: letter.letterNumber,
