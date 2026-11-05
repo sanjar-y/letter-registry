@@ -247,7 +247,7 @@ export function LettersRegistry() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-500">{t('common.count')}</span>
-            <div className="w-[80px]">
+            <div className="w-[110px]">
               <Select value={limit.toString()} onValueChange={(v) => { setLimit(Number(v)); setPage(1); }}>
                 <SelectTrigger>
                   <SelectValue />
@@ -258,6 +258,7 @@ export function LettersRegistry() {
                   <SelectItem value="20">20</SelectItem>
                   <SelectItem value="50">50</SelectItem>
                   <SelectItem value="100">100</SelectItem>
+                  <SelectItem value="1000000">{t('common.all')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
