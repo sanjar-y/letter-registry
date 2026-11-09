@@ -92,7 +92,6 @@ lib-cov
 .cache/
 
 # Docker
-.dockerignore
 
 # Misc
 .eslintcache
