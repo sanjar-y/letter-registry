@@ -1,45 +1,42 @@
 # Build stage
-FROM node:18-alpine AS build
+FROM node:20-slim AS build
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Prisma needs OpenSSL
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Copy source code and prisma schema
 COPY . .
 
-# Generate Prisma Client
+# Generate Prisma Client and build TypeScript
 RUN npx prisma generate
-
-# Build TypeScript code
 RUN npm run build
 
 # Production stage
-FROM node:18-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install production dependencies only
-RUN npm install --omit=dev
+COPY package.json package-lock.json ./
 
-# Copy built files from build stage
+# Keep the full node_modules from the build stage: the prisma CLI
+# (needed for `migrate deploy`) is a devDependency, and the generated
+# client lives inside node_modules/.prisma
+COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 
-# Expose the backend port
 EXPOSE 5000
 
-# Set environment variables
 ENV NODE_ENV=production
 ENV PORT=5000
 
-# Run migration and start server
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]
